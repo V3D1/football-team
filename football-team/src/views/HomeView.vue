@@ -1,9 +1,12 @@
+<template>
+  <div>HOME</div>
+  <div>
+    <UserListComponent />
+  </div>
+</template>
+
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import UserListComponent from '@/components/UserListComponent.vue'
 </script>
 
-<template>
-  <main>
-    <TheWelcome />
-  </main>
-</template>
+<style scoped></style>
