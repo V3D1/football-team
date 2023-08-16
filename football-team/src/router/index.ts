@@ -8,9 +8,13 @@ const router = createRouter({
       name: 'home',
       component: () => import('@/views/HomeView.vue'),
       meta: {
-        title: 'Users - Home page',
+        title: 'Interns - Home page',
         routeName: 'Home',
         metaTags: [
+          {
+            name: 'title',
+            content: 'Interns - Home page'
+          },
           {
             name: 'description',
             content: 'Home page with list of users'
@@ -28,7 +32,7 @@ const router = createRouter({
       props: (route) => ({ ...route.params, id: route.query.id }),
       component: () => import('@/views/EditUserView.vue'),
       meta: {
-        title: 'Users - Edit user',
+        title: 'Interns - Edit user',
         routeName: 'Edit user',
         metaTags: [
           {
@@ -47,7 +51,7 @@ const router = createRouter({
       name: 'add user',
       component: () => import('@/views/AddUserView.vue'),
       meta: {
-        title: 'Users - Add new user',
+        title: 'Interns - Add new user',
         routeName: 'Add new user',
         metaTags: [
           {
@@ -63,5 +67,8 @@ const router = createRouter({
     }
   ]
 })
-
+router.beforeEach((to, from, next) => {
+  document.title = `${to.meta.title}`
+  next()
+})
 export default router
