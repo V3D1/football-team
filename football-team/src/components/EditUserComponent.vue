@@ -1,16 +1,16 @@
 <template>
   <Form v-if="!isLoading" @submit="submitForm" :validation-schema="schema">
-    <div class="flex w-12 h-23rem gap-4">
-      <div class="flex align-content-between flex-wrap w-10 bg-white p-5 shadow-1">
-        <div class="flex w-12 mt-4">
-          <div class="flex flex-column w-12 mx-2">
+    <div class="flex w-12 h-23rem gap-4 flex-wrap">
+      <div class="flex align-content-between flex-wrap md:w-7 bg-white p-5 shadow-1 gap-4">
+        <div class="flex w-12 mt-4 gap-4">
+          <div class="flex flex-column w-12">
             <InputFieldComponent
               name="first_name"
               :providedText="userData.first_name"
               placeholder="First Name"
             />
           </div>
-          <div class="flex flex-column w-12 mx-2">
+          <div class="flex flex-column w-12">
             <InputFieldComponent
               name="last_name"
               :providedText="userData.last_name"
@@ -18,10 +18,10 @@
             />
           </div>
         </div>
-        <Button severity="success" class="w-3" label="Add new user" type="submit" />
+        <Button severity="success" class="lg:w-3 w-12 ml-2" label="Add new user" type="submit" />
       </div>
       <div
-        class="w-4 h-full p-5 bg-white shadow-1 flex flex-column align-items-center justify-content-between"
+        class="md:w-4 w-12 h-full p-5 bg-white shadow-1 flex flex-column align-items-center justify-content-between"
       >
         <div class="flex h-full justify-content-center align-items-center">
           <img
@@ -31,7 +31,7 @@
             src="../assets/defaultAvatar.jpg"
             alt="User avatar"
           />
-          <div v-else class="flex flex-column justify-content-center align-items-center">
+          <div v-else class="flex flex-column justify-content-center align-items-center mb-5">
             <div class="flex w-full justify-content-end">
               <Button
                 icon="pi pi-times"
@@ -57,7 +57,7 @@
           invalidFileTypeMessage="{0}: Invalid file type, allowed: {1}."
           invalidFileLimitMessage="Exceeded maximum file limit."
           accept="image/*"
-          chooseLabel="Add Photo"
+          chooseLabel="Change Photo"
           uploadIcon="pi pi-camera"
           cancelIcon="pi pi-times"
           :disabled="fileMessage.url ? true : false"
@@ -78,6 +78,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { ref, reactive, onMounted, computed } from 'vue'
 import Button from 'primevue/button'
 import FileUpload from 'primevue/fileupload'
+import { useToast } from 'primevue/usetoast'
 import InputFieldComponent from './InputFieldComponent.vue'
 import { useUserStore } from '@/stores/userStore'
 import router from '@/router'
@@ -103,6 +104,7 @@ const initialData = {
 }
 
 const userStore = useUserStore()
+const toast = useToast()
 const userData = computed(() => userStore.getSingleUser)
 const isLoading = ref<boolean>(true)
 
@@ -142,6 +144,12 @@ const submitForm = async (values: any) => {
   values.id = userData.value.id
   await router.push({ name: 'home' })
   await userStore.editUser(values)
+  toast.add({
+    severity: 'success',
+    summary: 'Edit user',
+    detail: 'User edited successfully',
+    life: 3000
+  })
 }
 </script>
 

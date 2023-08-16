@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="md:p-5">
     <RouterView />
   </div>
   <Toast position="bottom-right" />

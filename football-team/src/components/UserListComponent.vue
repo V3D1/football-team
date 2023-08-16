@@ -4,15 +4,14 @@
     :filters="filters"
     stripedRows
     tableStyle="min-width: 20rem; border-radius: 2rem;"
-    currentPageReportTemplate="{first} to {last} of {totalRecords}"
     column-resize-mode="fit"
     responsive-layout="scroll"
-    breakpoint="800px"
+    lazy
     class="shadow-1"
     :global-filter-fields="['global', 'fullName']"
   >
     <template #header>
-      <div class="flex justify-content-between flex-row">
+      <div class="flex justify-content-between flex-row flex-wrap gap-4">
         <span class="p-input-icon-right">
           <InputText v-model="filters['global'].value" placeholder="Search for users..." />
           <i class="pi pi-search" />

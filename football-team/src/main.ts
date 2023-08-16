@@ -8,6 +8,7 @@ import 'primeflex/primeflex.css'
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 import 'primevue/resources/themes/saga-blue/theme.css'
+import ToastService from 'primevue/toastservice'
 
 import App from './App.vue'
 import router from './router'
@@ -19,5 +20,6 @@ app.use(router)
 app.use(PrimeVue, {
   ripple: true
 })
+app.use(ToastService)
 
 app.mount('#app')
