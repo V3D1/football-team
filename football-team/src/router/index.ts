@@ -25,6 +25,7 @@ const router = createRouter({
     {
       path: '/edit_user',
       name: 'edit user',
+      props: (route) => ({ ...route.params, id: route.query.id }),
       component: () => import('@/views/EditUserView.vue'),
       meta: {
         title: 'Football Team - Edytuj użytkownika',

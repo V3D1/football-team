@@ -100,8 +100,8 @@ const goToAddUser = async () => {
   await router.push({ name: 'add user' })
 }
 
-const editUser = (id: number) => {
-  console.log(id)
+const editUser = async (id: number) => {
+  await router.push({ name: 'edit user', query: { id: id } })
 }
 
 const deleteUser = (id: number) => {

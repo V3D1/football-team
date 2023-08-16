@@ -6,6 +6,7 @@
     type="text"
     style="font-family: Cabin, Arial, Helvetica, sans-serif"
     :placeholder="placeholder"
+    :value="providedText"
     :name="name"
     v-model="value"
     aria-describedby="text-help"

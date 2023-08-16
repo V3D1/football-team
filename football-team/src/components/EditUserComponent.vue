@@ -1,13 +1,21 @@
 <template>
-  <Form @submit="submitForm" :validation-schema="schema">
+  <Form v-if="!isLoading" @submit="submitForm" :validation-schema="schema">
     <div class="flex w-12 h-23rem gap-4">
       <div class="flex align-content-between flex-wrap w-10 bg-white p-5 shadow-1">
         <div class="flex w-12 mt-4">
           <div class="flex flex-column w-12 mx-2">
-            <InputFieldComponent name="first_name" placeholder="First Name" />
+            <InputFieldComponent
+              name="first_name"
+              :providedText="userData.first_name"
+              placeholder="First Name"
+            />
           </div>
           <div class="flex flex-column w-12 mx-2">
-            <InputFieldComponent name="last_name" placeholder="Last Name" />
+            <InputFieldComponent
+              name="last_name"
+              :providedText="userData.last_name"
+              placeholder="Last Name"
+            />
           </div>
         </div>
         <Button severity="success" class="w-3" label="Add new user" type="submit" />
@@ -17,7 +25,7 @@
       >
         <div class="flex h-full justify-content-center align-items-center">
           <img
-            v-if="!fileMessage.attachmentName"
+            v-if="!fileMessage.url"
             style="width: 100px; height: 100px"
             class="border-circle shadow-1"
             src="../assets/defaultAvatar.jpg"
@@ -40,7 +48,6 @@
               :src="fileMessage.url"
               alt="Image with default avatar by studiogstock on Freepik"
             />
-            <span class="word-wrap my-4"> Name: {{ fileMessage.attachmentName }} </span>
           </div>
         </div>
         <FileUpload
@@ -52,6 +59,7 @@
           accept="image/*"
           chooseLabel="Add Photo"
           uploadIcon="pi pi-camera"
+          cancelIcon="pi pi-times"
           :disabled="fileMessage.url ? true : false"
           :auto="true"
           :maxFileSize="1000000"
@@ -67,12 +75,16 @@
 import { Form } from 'vee-validate'
 import * as yup from 'yup'
 import { v4 as uuidv4 } from 'uuid'
-import { reactive } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import Button from 'primevue/button'
 import FileUpload from 'primevue/fileupload'
 import InputFieldComponent from './InputFieldComponent.vue'
 import { useUserStore } from '@/stores/userStore'
 import router from '@/router'
+
+const props = defineProps<{
+  id: string
+}>()
 
 interface fileData {
   attachment: File | null
@@ -91,6 +103,15 @@ const initialData = {
 }
 
 const userStore = useUserStore()
+const userData = computed(() => userStore.getSingleUser)
+const isLoading = ref<boolean>(true)
+
+onMounted(async () => {
+  isLoading.value = true
+  await userStore.fetchSingleUser(props.id)
+  fileMessage.url = userData.value.avatar
+  isLoading.value = false
+})
 
 const fileMessage: fileData = reactive({ ...initialData })
 
@@ -118,9 +139,9 @@ const submitForm = async (values: any) => {
   fileMessage.url
     ? (values.avatar = fileMessage.url)
     : (values.avatar = 'src/assets/defaultAvatar.jpg')
-  values.id = 99
+  values.id = userData.value.id
   await router.push({ name: 'home' })
-  await userStore.postNewUser(values)
+  await userStore.editUser(values)
 }
 </script>
 
