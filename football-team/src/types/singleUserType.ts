@@ -1,7 +1,6 @@
-export interface singleUserType {
+export default interface singleUserType {
   id: number | null
   email: string
-  firstName: string
-  lastName: string
+  fullName: string
   avatar: string
 }
