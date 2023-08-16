@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3">
+  <div class="md:p-3">
     <h1>User list</h1>
     <UserListComponent
       :userList="userList"

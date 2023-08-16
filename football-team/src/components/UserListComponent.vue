@@ -12,7 +12,7 @@
     :global-filter-fields="['global', 'fullName']"
   >
     <template #header>
-      <div class="flex justify-content-between flex-row">
+      <div class="flex justify-content-between flex-row flex-wrap gap-4">
         <span class="p-input-icon-right">
           <InputText v-model="filters['global'].value" placeholder="Search for users..." />
           <i class="pi pi-search" />

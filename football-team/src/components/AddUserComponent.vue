@@ -1,19 +1,19 @@
 <template>
   <Form @submit="submitForm" :validation-schema="schema">
-    <div class="flex w-12 h-23rem gap-4">
-      <div class="flex align-content-between flex-wrap w-10 bg-white p-5 shadow-1">
-        <div class="flex w-12 mt-4">
-          <div class="flex flex-column w-12 mx-2">
+    <div class="flex w-12 h-23rem gap-4 flex-wrap">
+      <div class="flex align-content-between flex-wrap md:w-7 bg-white p-5 shadow-1 gap-4">
+        <div class="flex w-12 mt-4 gap-4">
+          <div class="flex flex-column w-12">
             <InputFieldComponent name="first_name" placeholder="First Name" />
           </div>
-          <div class="flex flex-column w-12 mx-2">
+          <div class="flex flex-column w-12">
             <InputFieldComponent name="last_name" placeholder="Last Name" />
           </div>
         </div>
-        <Button severity="success" class="w-3" label="Add new user" type="submit" />
+        <Button severity="success" class="lg:w-3 w-12 ml-2" label="Add new user" type="submit" />
       </div>
       <div
-        class="w-4 h-full p-5 bg-white shadow-1 flex flex-column align-items-center justify-content-between"
+        class="md:w-4 w-12 h-full p-5 bg-white shadow-1 flex flex-column align-items-center justify-content-between"
       >
         <div class="flex h-full justify-content-center align-items-center">
           <img
