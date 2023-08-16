@@ -1,41 +1,50 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { UserService } from '@/services/userService'
-import type { singleUserType } from '@/types/singleUserType'
+import type singleUserType from '@/types/singleUserType'
+import type pageDetailsType from '@/types/pageDetailsType'
+import UserModel from '@/models/userModel'
 
 type State = {
   userList: Array<singleUserType>
   singleUser: singleUserType
+  pageData: pageDetailsType
 }
 export const useUserStore = defineStore('UserStore', {
   state: (): State => {
     return {
-      userList: [
-        {
-          id: null,
-          email: '',
-          firstName: '',
-          lastName: '',
-          avatar: ''
-        }
-      ],
+      userList: [],
       singleUser: {
         id: null,
         email: '',
-        firstName: '',
-        lastName: '',
+        fullName: '',
         avatar: ''
+      },
+      pageData: {
+        page: 0,
+        per_page: 0,
+        total: 0,
+        total_pages: 0
       }
     }
   },
   getters: {
-    getUserList: (state: State) => state.userList
+    getUserList: (state: State) => state.userList,
+    getPageData: (state: State) => state.pageData
   },
   actions: {
-    async fetchUserList() {
+    async fetchUserList(pageNumber: number) {
       try {
         const service = new UserService()
-        const response = await service.fetchUserList()
-        this.userList = response
+        const response = await service.fetchUserList(pageNumber)
+        const tempList = []
+        for (const user of response.data.data) {
+          tempList.push(new UserModel(user))
+        }
+        this.userList = tempList
+        this.pageData.page = response.data.page
+        this.pageData.per_page = response.data.per_page
+        this.pageData.total = response.data.total
+        this.pageData.total_pages = response.data.total_pages
       } catch (error) {
         console.log(error)
       }
@@ -44,7 +53,7 @@ export const useUserStore = defineStore('UserStore', {
       try {
         const service = new UserService()
         const response = await service.fetchSingleUser(id)
-        this.singleUser = response
+        this.singleUser = response.data
       } catch (error) {
         console.log(error)
       }
@@ -53,7 +62,7 @@ export const useUserStore = defineStore('UserStore', {
       try {
         const service = new UserService()
         const response = await service.postNewUser(userData)
-        this.singleUser = response
+        this.singleUser = response.data
       } catch (error) {
         console.log(error)
       }

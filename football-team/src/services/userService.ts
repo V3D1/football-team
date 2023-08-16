@@ -1,11 +1,11 @@
-import type { singleUserType } from '@/types/singleUserType'
+import type singleUserType from '@/types/singleUserType'
 import instance from '@/services/api'
 
 export class UserService {
-  async fetchUserList() {
+  async fetchUserList(pageNumber: number) {
     try {
-      const response: any = await instance.get('/users')
-      return Promise.resolve(response.data)
+      const response: any = await instance.get(`/users?page=${pageNumber}`)
+      return Promise.resolve(response)
     } catch (error) {
       return Promise.reject(error)
     }
