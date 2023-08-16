@@ -10,7 +10,7 @@ export class UserService {
       return Promise.reject(error)
     }
   }
-  async fetchSingleUser(id: number) {
+  async fetchSingleUser(id: string) {
     try {
       const response: any = await instance.get(`/users/${id}`)
       return Promise.resolve(response.data)
@@ -23,6 +23,7 @@ export class UserService {
       const response: any = await instance.post('/users/', {
         body: userData
       })
+      console.log(response)
       return Promise.resolve(response.data)
     } catch (error) {
       return Promise.reject(error)
@@ -33,6 +34,7 @@ export class UserService {
       const response: any = await instance.put(`/users/${userData.id}`, {
         body: userData
       })
+      console.log(response)
       return Promise.resolve(response.data)
     } catch (error) {
       return Promise.reject(error)
@@ -41,6 +43,7 @@ export class UserService {
   async deleteUser(id: number) {
     try {
       const response: any = await instance.delete(`/users/${id}`)
+      console.log(response)
       return Promise.resolve(response.data)
     } catch (error) {
       return Promise.reject(error)

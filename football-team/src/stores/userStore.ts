@@ -6,7 +6,12 @@ import UserModel from '@/models/userModel'
 
 type State = {
   userList: Array<singleUserType>
-  singleUser: singleUserType
+  singleUser: {
+    id: number | null
+    first_name: string
+    last_name: string
+    avatar: string
+  }
   pageData: pageDetailsType
 }
 export const useUserStore = defineStore('UserStore', {
@@ -15,8 +20,8 @@ export const useUserStore = defineStore('UserStore', {
       userList: [],
       singleUser: {
         id: null,
-        email: '',
-        fullName: '',
+        first_name: '',
+        last_name: '',
         avatar: ''
       },
       pageData: {
@@ -29,7 +34,8 @@ export const useUserStore = defineStore('UserStore', {
   },
   getters: {
     getUserList: (state: State) => state.userList,
-    getPageData: (state: State) => state.pageData
+    getPageData: (state: State) => state.pageData,
+    getSingleUser: (state: State) => state.singleUser
   },
   actions: {
     async fetchUserList(pageNumber: number) {
@@ -49,7 +55,7 @@ export const useUserStore = defineStore('UserStore', {
         console.log(error)
       }
     },
-    async fetchSingleUser(id: number) {
+    async fetchSingleUser(id: string) {
       try {
         const service = new UserService()
         const response = await service.fetchSingleUser(id)
@@ -61,8 +67,8 @@ export const useUserStore = defineStore('UserStore', {
     async postNewUser(userData: singleUserType) {
       try {
         const service = new UserService()
-        const response = await service.postNewUser(userData)
-        this.singleUser = response.data
+        const response = await service.postNewUser(new UserModel(userData))
+        this.userList.unshift(response.body)
       } catch (error) {
         console.log(error)
       }
@@ -72,7 +78,7 @@ export const useUserStore = defineStore('UserStore', {
         const service = new UserService()
         await service.editUser(userData)
         const indexToChange: number = this.userList.findIndex((user) => user.id === userData.id)
-        this.userList[indexToChange] = userData
+        this.userList[indexToChange] = new UserModel(userData)
       } catch (error) {
         console.log(error)
       }
