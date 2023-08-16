@@ -4,10 +4,9 @@
     :filters="filters"
     stripedRows
     tableStyle="min-width: 20rem; border-radius: 2rem;"
-    currentPageReportTemplate="{first} to {last} of {totalRecords}"
     column-resize-mode="fit"
     responsive-layout="scroll"
-    breakpoint="800px"
+    lazy
     class="shadow-1"
     :global-filter-fields="['global', 'fullName']"
   >

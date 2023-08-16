@@ -23,7 +23,7 @@
             src="../assets/defaultAvatar.jpg"
             alt="User avatar"
           />
-          <div v-else class="flex flex-column justify-content-center align-items-center">
+          <div v-else class="flex flex-column justify-content-center align-items-center mb-5">
             <div class="flex w-full justify-content-end">
               <Button
                 icon="pi pi-times"
@@ -70,6 +70,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { reactive } from 'vue'
 import Button from 'primevue/button'
 import FileUpload from 'primevue/fileupload'
+import { useToast } from 'primevue/usetoast'
 import InputFieldComponent from './InputFieldComponent.vue'
 import { useUserStore } from '@/stores/userStore'
 import router from '@/router'
@@ -91,7 +92,7 @@ const initialData = {
 }
 
 const userStore = useUserStore()
-
+const toast = useToast()
 const fileMessage: fileData = reactive({ ...initialData })
 
 const customUpload = (event: any) => {
@@ -121,6 +122,12 @@ const submitForm = async (values: any) => {
   values.id = 99
   await router.push({ name: 'home' })
   await userStore.postNewUser(values)
+  toast.add({
+    severity: 'success',
+    summary: 'Add user',
+    detail: 'User added successfully',
+    life: 3000
+  })
 }
 </script>
 

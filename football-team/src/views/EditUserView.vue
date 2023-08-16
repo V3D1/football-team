@@ -1,6 +1,6 @@
 <template>
   <div class="p-3">
-    <h1>Edit User</h1>
+    <h1 class="font-medium">Edit User</h1>
     <EditUserComponent :id="id" />
   </div>
 </template>
