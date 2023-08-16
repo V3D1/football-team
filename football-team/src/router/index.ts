@@ -8,16 +8,16 @@ const router = createRouter({
       name: 'home',
       component: () => import('@/views/HomeView.vue'),
       meta: {
-        title: 'Football Team - Home',
+        title: 'Users - Home page',
         routeName: 'Home',
         metaTags: [
           {
             name: 'description',
-            content: 'Strona domowa przedstawiająca listę stażystów.'
+            content: 'Home page with list of users'
           },
           {
             property: 'og:description',
-            content: 'Strona domowa przedstawiająca listę stażystów.'
+            content: 'Home page with list of users'
           }
         ]
       }
@@ -28,16 +28,16 @@ const router = createRouter({
       props: (route) => ({ ...route.params, id: route.query.id }),
       component: () => import('@/views/EditUserView.vue'),
       meta: {
-        title: 'Football Team - Edytuj użytkownika',
-        routeName: 'Edytuj użytkownika',
+        title: 'Users - Edit user',
+        routeName: 'Edit user',
         metaTags: [
           {
             name: 'description',
-            content: 'Strona służąca do edycji danych użytkownika.'
+            content: 'Page with editing user'
           },
           {
             property: 'og:description',
-            content: 'Strona służąca do edycji danych użytkownika.'
+            content: 'Page with editing user'
           }
         ]
       }
@@ -47,16 +47,16 @@ const router = createRouter({
       name: 'add user',
       component: () => import('@/views/AddUserView.vue'),
       meta: {
-        title: 'Football Team - Dodaj użytkownika',
-        routeName: 'Dodaj użytkownika',
+        title: 'Users - Add new user',
+        routeName: 'Add new user',
         metaTags: [
           {
             name: 'description',
-            content: 'Strona służąca do dodawania nowego użytkownika.'
+            content: 'Page with adding new user'
           },
           {
             property: 'og:description',
-            content: 'Strona służąca do dodawania nowego użytkownika'
+            content: 'Page with adding new user'
           }
         ]
       }
